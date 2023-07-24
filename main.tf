@@ -33,7 +33,7 @@ resource "aws_security_group" "sg" {
 
 
 resource "aws_launch_template" "template" {
-  name_prefix   = "${var.name}-${var.env}"
+  name_prefix   = "${var.name}-${var.env}-lt"
   image_id      = data.aws_ami.ami.id
   instance_type = var.instance_type
   vpc_security_group_ids = [ aws_security_group.sg.id ]
@@ -41,7 +41,7 @@ resource "aws_launch_template" "template" {
 
 resource "aws_autoscaling_group" "asg" {
   name = "${var.name}-${var.env}-asg"
-  desired_capacity   = var.desired_capacity
+  desired_capacity   = var.desired_capacity 
   max_size           = var.max_size
   min_size           = var.min_size
   vpc_zone_identifier = var.subnet_ids
@@ -52,12 +52,13 @@ resource "aws_autoscaling_group" "asg" {
   }
 }
 
-#dynamic "tags" {
-#  for_each = local.asg_tags
-#  content {
-#    key                 = tag.key
-#    propagate_at_launch = true
-#    value               = tag.value
-#  }
-#}
+dynamic "tags" {
+  for_each = local.asg_tags
+  content {
+    key                 = tag.key
+    propagate_at_launch = true
+    value               = tag.value
+  }
+}
+
 
