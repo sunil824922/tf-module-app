@@ -50,6 +50,3 @@ resource "aws_iam_role_policy" "ssm-ps-policy" {
     ]
   })
 }
-
-#"arn:aws:kms:us-east-1:116420554906:key/d8114269-4589-4ff0-b070-3df5d1a3c910"
-#116420554906
